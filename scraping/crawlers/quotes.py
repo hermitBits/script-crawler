@@ -1,4 +1,4 @@
-from scraping.crawler_base import Crawler
+from scraping.crawler_base import CrawlerBase
 
 from models.quotes import Quotes as QuotesModel
 
@@ -6,7 +6,7 @@ from scraping import logger
 from typing import Dict
 
 
-class Quotes(Crawler):
+class Quotes(CrawlerBase):
     """ Crawler Quotes
     """
     

@@ -1,7 +1,7 @@
 from typing import List
 
 from scraping import logger
-from scraping.crawler_base import Crawler
+from scraping.crawler_base import CrawlerBase
 
 
 class ManagerCrawler:
@@ -9,9 +9,9 @@ class ManagerCrawler:
     """
     
     def __init__(self) -> None:
-        self.crawlers : List[Crawler] = []
+        self.crawlers : List[CrawlerBase] = []
 
-    def add_crawler(self, crawler: Crawler) -> None:
+    def add_crawler(self, crawler: CrawlerBase) -> None:
         """ Empilhar crawlers
         
         Args:

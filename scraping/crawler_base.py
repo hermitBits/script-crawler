@@ -13,7 +13,7 @@ from database.db_sqlite import session
 from scraping import logger
 
 
-class Crawler():
+class CrawlerBase():
     """ Classe para base de um crawler
     """
     
