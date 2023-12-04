@@ -20,11 +20,13 @@ class Crawler():
         self.crawler_name = crawler_name
         self.items = []
         # self.model_item = model_item
-        self.current_date = None
         self.batch = None
         self.response = None
         
     def request(self) -> None:
+        """ executar request na página que será feita raspagem
+        """
+        
         try:
             r = requests.get(self.url)
             logger.info(f'request page - {self.url}')
@@ -39,15 +41,18 @@ class Crawler():
             logger.critical(f'error request page - {self.url} - \n {e}')
 
     def save_data_json(self) -> None:
-        file_path = f'data/{self.batch}/{self.crawler_name}_data-{self.current_date}.json'
+        """ salvar lote de dados em json
+        """
+        
+        file_path = f'data/{self.batch}/{self.crawler_name}.json'
         with open(file_path, 'w', encoding='utf-8') as json_file:
             json.dump(self.items, json_file, indent=4, ensure_ascii=False)
         logger.info('batch saved in JSON')
     
     def save(self) -> None:
-        self.current_date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        """ salvar lote de dados
+        """
         
-        # gerar lote de dados
         self.batch_generate()
             
         try:
@@ -56,6 +61,9 @@ class Crawler():
             logger.error(f'error saving batch - {e}')
 
     def batch_generate(self):
+        """ gerar lote para salvar os dados
+        """
+        
         try:
             self.batch = str(uuid.uuid4())
             os.makedirs(f'data/{self.batch}')

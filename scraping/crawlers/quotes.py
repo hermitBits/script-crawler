@@ -5,7 +5,7 @@ from typing import Dict
 
 
 class Quotes(Crawler):
-    """
+    """ Crawler Quotes
     """
     
     def __init__(self, config: Dict):
