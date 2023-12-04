@@ -30,6 +30,7 @@ class Quotes(Crawler):
                 }
                 
                 self.items.append(item)
+                logger.info(f"item - {item}")
             except:
                 logger.error(f"fails to extract data")
                 
