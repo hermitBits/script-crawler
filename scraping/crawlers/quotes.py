@@ -1,4 +1,4 @@
-from scraping.crawler import Crawler
+from scraping.crawler_base import Crawler
 
 from models.quotes import Quotes as QuotesModel
 

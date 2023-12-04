@@ -82,6 +82,11 @@ class Crawler():
             self.save_data_database()
         except Exception as e:
             logger.error(f'error saving batch in database - {e}')
+        
+        try:
+            self.screenshot()
+        except Exception as e:
+            logger.error(f'error saving screenshot - {e}')
 
     def batch_generate(self):
         """ gerar lote para salvar os dados
@@ -93,6 +98,15 @@ class Crawler():
             logger.info(f'batch generated - {str(self.batch)}')
         except Exception as e:
             logger.error(f'error batch generated - {e}')
+            
+    def screenshot(self):
+        """ salvar screenshot da requisição do site
+        """
+        from utils.screenshot import screenshot
+        
+        file_path = f'data/{self.batch}/{self.crawler_name}.png'
+        screenshot(self.url, file_path)
+        logger.info(f'screenshot save - batch {self.batch}')
 
     @abstractmethod
     def execute(self) -> None: ...

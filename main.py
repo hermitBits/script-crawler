@@ -1,17 +1,31 @@
-from scraping.crawlers.quotes import Quotes
-from scraping.manager_crawler import ManagerCrawler
+from prompt_toolkit import prompt
 
-config = {
-    'url': 'https://quotes.toscrape.com/',
-    'class_quote': '.quote',
-    'class_author': '.author',
-    'class_text': '.text',
-    'class_keywords': '.keywords'
-}
+from utils.display import get_appointment
+from scraping.schedule import schedule_task, execute_tasks
 
-quotes = Quotes(config)
 
-manager = ManagerCrawler()
-manager.add_crawler(quotes)
+def menu():
+    print("1. Agendar tarefa")
+    print("2. Executar agora")
+    print("3. Sair")
+    return prompt('Escolha uma opção: ')
 
-manager.execute_crawlers()
+
+if __name__ == '__main__':
+    scheduled_date = None
+    while True:
+        
+        opcao = menu()
+        
+        ## agendar
+        if opcao == '1':
+            scheduled_date = get_appointment()
+            schedule_task(scheduled_date)
+        # executar imediatamente
+        elif opcao == '2':
+            execute_tasks()
+        # sair
+        elif opcao == '3':
+            break
+        else:
+            print("Opção inválida. Tente novamente.")

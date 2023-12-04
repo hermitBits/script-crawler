@@ -1,7 +1,7 @@
 from typing import List
 
 from scraping import logger
-from scraping.crawler import Crawler
+from scraping.crawler_base import Crawler
 
 
 class ManagerCrawler:

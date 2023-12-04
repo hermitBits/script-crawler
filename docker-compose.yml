@@ -9,3 +9,5 @@ services:
       - "8080:8080"
     volumes:
       - ./:/app
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
