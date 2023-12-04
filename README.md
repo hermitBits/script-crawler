@@ -51,7 +51,7 @@ A interação é interativa, então abrirá menu com a opção de executar de im
 
 </div>
 
-<div id="cadastrar">
+<div id="cadastro">
 <h2>3. Cadastrar um crawler</h2>
 
 Arquivo **scraping/register_crawlers.py**, fica com responsabilidade de cadastrar crawlers que serão executados.
