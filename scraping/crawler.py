@@ -8,6 +8,8 @@ from datetime import datetime
 from abc import abstractmethod
 from bs4 import BeautifulSoup
 
+from database.db_sqlite import session
+
 from scraping import logger
 
 
@@ -15,11 +17,11 @@ class Crawler():
     """ Classe para base de um crawler
     """
     
-    def __init__(self, crawler_name, url):
+    def __init__(self, crawler_name, url, model_item):
         self.url = url
         self.crawler_name = crawler_name
         self.items = []
-        # self.model_item = model_item
+        self.model_item = model_item
         self.batch = None
         self.response = None
         
@@ -49,6 +51,22 @@ class Crawler():
             json.dump(self.items, json_file, indent=4, ensure_ascii=False)
         logger.info('batch saved in JSON')
     
+    def save_data_database(self) -> None:
+        """ salvar lote de dados, no banco
+        """
+        
+        for item in self.items:
+            item['batch'] = self.batch
+            new_item = self.model_item(**item)
+            
+            try:
+                session.add(new_item)
+                session.commit()
+                logger.info(f'item saved in database - {new_item}')
+            except Exception as e:
+                session.rollback()
+                logger.error(f'error insert, rollback - {e}')
+    
     def save(self) -> None:
         """ salvar lote de dados
         """
@@ -58,16 +76,21 @@ class Crawler():
         try:
             self.save_data_json()
         except Exception as e:
-            logger.error(f'error saving batch - {e}')
+            logger.error(f'error saving batch in json - {e}')
+        
+        try:
+            self.save_data_database()
+        except Exception as e:
+            logger.error(f'error saving batch in database - {e}')
 
     def batch_generate(self):
         """ gerar lote para salvar os dados
         """
         
         try:
-            self.batch = str(uuid.uuid4())
-            os.makedirs(f'data/{self.batch}')
-            logger.info(f'batch generated - {self.batch}')
+            self.batch = uuid.uuid4()
+            os.makedirs(f'data/{str(self.batch)}')
+            logger.info(f'batch generated - {str(self.batch)}')
         except Exception as e:
             logger.error(f'error batch generated - {e}')
 

@@ -1,5 +1,7 @@
 from scraping.crawler import Crawler
 
+from models.quotes import Quotes as QuotesModel
+
 from scraping import logger
 from typing import Dict
 
@@ -11,7 +13,8 @@ class Quotes(Crawler):
     def __init__(self, config: Dict):
         super().__init__(
             crawler_name=config.get('crawler_name', 'quotes'),
-            url=config.get('url')
+            url=config.get('url'),
+            model_item=QuotesModel
         )
         self.config = config
         
