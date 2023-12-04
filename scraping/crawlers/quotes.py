@@ -19,6 +19,7 @@ class Quotes(Crawler):
         self.config = config
         
     def execute(self) -> None:
+        # executar request na página
         self.request()
         
         quotes = self.response.select(self.config.get('class_quote'))
@@ -35,6 +36,7 @@ class Quotes(Crawler):
                 self.items.append(item)
                 logger.info(f"item - {item}")
             except:
-                logger.error(f"fails to extract data")
-                
+                logger.error(f"fails to extract item")
+        
+        # salvar dados extraidos
         self.save()
